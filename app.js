@@ -1,9 +1,9 @@
 /**
  * |-| [- |_ | /\ ( ~|~ `/ |_
  *
- * Heliactyl 14.11.0 ― Cascade Ridge
+ * ChunkDash 14.11.0 ― Cascade Ridge
  *
- * This file represents the main entry point of the Heliactyl application.
+ * This file represents the main entry point of the ChunkDash application.
  * It loads the necessary packages, settings, and databases.
  * It also handles the routing and rendering of web pages.
  * @module index
