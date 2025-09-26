@@ -1,59 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title><%= settings.name %></title>
-  <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="../assets/tailwind.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://unpkg.com/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - <%= typeof settings !== 'undefined' && settings.name ? settings.name : 'Dashboard' %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Your existing CSS styles from dashboard */
+        :root {
+            --primary: #7289da;
+            --primary-dark: #5b6eae;
+            --secondary: #1e1e2e;
+            --secondary-light: #2a2a3e;
+            --accent: #43b581;
+            --danger: #ed4245;
+            --warning: #faa81a;
+            --text: #ffffff;
+            --text-muted: #a0a0c0;
+            --border: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(30, 30, 46, 0.8);
+            --sidebar-width: 260px;
+            --header-height: 70px;
+        }
 
-  <!-- Inter font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--secondary);
+            height: 100vh;
+            position: fixed;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 15px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            background: var(--secondary-light);
+            color: var(--text);
+        }
+
+        .nav-item.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .nav-item i {
+            width: 24px;
+            margin-right: 12px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--secondary-light);
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+            border: 2px solid var(--primary);
+        }
+
+        .user-details h3 {
+            font-size: 1rem;
+        }
+
+        .user-details p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .logout-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .logout-btn:hover {
+            background: #c03537;
+        }
+
+        .logout-btn i {
+            margin-right: 6px;
+        }
+
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+        }
+
+        .card-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        /* Profile Banner */
+        .profile-banner {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-banner-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .profile-banner h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .profile-banner p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Profile Content */
+        .profile-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+        }
+
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-main {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Profile Info */
+        .profile-info {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: var(--secondary-light);
+            border-radius: 10px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-right: 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .profile-details h2 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .profile-details p {
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .info-item {
+            background: var(--secondary-light);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        /* Button Styles */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn i {
+            margin-right: 5px;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .profile-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .sidebar .nav-item span {
+                display: none;
+            }
+
+            .sidebar-header h2 {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-info {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .profile-stats {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
-
-<body class="bg-gray-100" style="font-family: 'Inter', sans-serif;">
-  <%- include('../components/navigation') %>
-  <div class="md:pl-48 flex flex-col flex-1 h-screen">
-    <main class="flex-1 pb-32">
-      <div class="py-6">
-        <% /* Skeleton loader, lasts about 0.3s to let the page content load */ %>
-        <%- include('../components/skeleton') %>
-        <div class="hidden max-w-7xl pt-8 mx-auto px-4 sm:px-6 md:px-8" id="content">
-          <div>
-            <div>
-              <img class="h-32 w-full object-cover lg:h-72 rounded-3xl" src="../assets/profileBanner.png" alt=""> <!-- Path: assets/profileBanner.png - You can replace this image to change the default profile banner -->
-            </div>
-            <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-              <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
-                <div class="flex">
-                  <img class="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32" src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="">
-                </div>
-                <div class="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
-                  <div class="mt-6 min-w-0 flex-1 sm:hidden md:block">
-                    <h1 class="truncate text-2xl font-medium tracking-tight text-gray-900"><%= userinfo.global_name %> <span class="text-gray-600">(<%= userinfo.username %>)</span></h1>
-                  </div>
-                  <div class="justify-stretch mt-6 flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4">
-                    <a href="../updateinfo" type="button" class="transition inline-flex items-center rounded-2xl bg-gray-200 px-8 py-2 text-sm font-medium text-gray-600 hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 h-5 w-5 text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                      </svg>
-                      Refresh
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mt-10">
-            <div class="card-body">
-              <label class="text-sm font-medium pb-4 text-gray-600">User Object</label>
-              <div class="bg-gray-300 px-8 py-2 mt-4 rounded-t-3xl text-gray-600"><span class="text-gray-600 text-xs font-semibold">JSON</span></div>
-              <pre class="text-xs bg-gray-200 pb-8 pl-8 pr-8 pt-2 mb-6 rounded-b-3xl text-gray-600"><%= JSON.stringify(userinfo, null, 2) %></pre>
-            </div>
-          </div>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2><%= typeof settings !== 'undefined' && settings.name ? settings.name : 'Dashboard' %></h2>
         </div>
-      </div>
-    </main>
-    <%- include('../components/footer') %>
-  </div>
-  </div>
+
+        <a href="/dashboard" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'dashboard' ? 'active' : '' %>">
+            <i class="fas fa-home"></i>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="/servers" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'servers' ? 'active' : '' %>">
+            <i class="fas fa-server"></i>
+            <span>My Servers</span>
+        </a>
+
+        <a href="/servers/new" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'create' ? 'active' : '' %>">
+            <i class="fas fa-plus"></i>
+            <span>Create Server</span>
+        </a>
+
+        <a href="/afk" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'afk' ? 'active' : '' %>">
+            <i class="fas fa-coins"></i>
+            <span>AFK Earnings</span>
+        </a>
+
+        <a href="/profile" class="nav-item active">
+            <i class="fa-solid fa-id-card"></i>
+            <span>My Profile</span>
+        </a>
+
+        <a href="/earn" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'earn' ? 'active' : '' %>">
+            <i class="fas fa-money-bill-wave"></i>
+            <span>Earn Coins</span>
+        </a>
+
+        <a href="/promotion" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'promotion' ? 'active' : '' %>">
+            <i class="fas fa-bullhorn"></i>
+            <span>Promotion</span>
+        </a>
+
+        <a href="/stock" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'stock' ? 'active' : '' %>">
+            <i class="fas fa-chart-line"></i>
+            <span>Stock Market</span>
+        </a>
+
+        <a href="/store" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'store' ? 'active' : '' %>">
+            <i class="fas fa-microchip"></i>
+            <span>Resources</span>
+        </a>
+
+        <a href="/security" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'settings' ? 'active' : '' %>">
+            <i class="fas fa-cog"></i>
+            <span>Settings</span>
+        </a>
+
+        <a href="/transfer" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'transfer' ? 'active' : '' %>">
+            <i class="fa-solid fa-money-bill-transfer"></i>
+            <span>Transfer Coin</span>
+        </a>
+
+        <% if (typeof user !== 'undefined' && user.role === 'admin') { %>
+            <a href="/admin" class="nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'admin' ? 'active' : '' %>">
+                <i class="fas fa-shield-alt"></i>
+                <span>Admin Panel</span>
+            </a>
+        <% } %>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div class="user-info">
+                <% if (typeof user !== 'undefined' && user.avatar) { %>
+                    <img src="<%= user.avatar %>" alt="Avatar" class="user-avatar">
+                <% } else { %>
+                    <div class="user-avatar" style="background: var(--primary); display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                <% } %>
+                <div class="user-details">
+                    <h3><%= typeof user !== 'undefined' ? user.username : 'Guest' %></h3>
+                    <p>Balance: <span id="user-balance"><%= typeof coins !== 'undefined' ? coins.toFixed(2) : '0.00' %></span> coins</p>
+                </div>
+            </div>
+
+            <button class="logout-btn" onclick="location.href='/logout'">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+
+        <!-- Profile Banner -->
+        <div class="profile-banner">
+            <div class="profile-banner-content">
+                <h1>My Profile</h1>
+                <p>Manage your account information and settings</p>
+            </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="profile-content">
+            <!-- Profile Sidebar -->
+            <div class="profile-sidebar">
+                <!-- Profile Info Card -->
+                <div class="card">
+                    <div class="profile-info">
+                        <% if (typeof userinfo !== 'undefined' && userinfo.avatar) { %>
+                            <img src="https://cdn.discordapp.com/avatars/<%= userinfo.id %>/<%= userinfo.avatar %>?size=256" alt="Profile Avatar" class="profile-avatar">
+                        <% } else { %>
+                            <div class="profile-avatar" style="background: var(--primary); display: flex; align-items: center; justify-content: center;">
+                                <i class="fas fa-user fa-3x"></i>
+                            </div>
+                        <% } %>
+                        <div class="profile-details">
+                            <h2><%= typeof userinfo !== 'undefined' ? userinfo.global_name : 'User' %></h2>
+                            <p>@<%= typeof userinfo !== 'undefined' ? userinfo.username : 'username' %></p>
+
+                            <div class="profile-stats">
+                                <div class="stat">
+                                    <div class="stat-value"><%= typeof servers !== 'undefined' ? servers.length : '0' %></div>
+                                    <div class="stat-label">Servers</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value"><%= typeof coins !== 'undefined' ? coins.toFixed(0) : '0' %></div>
+                                    <div class="stat-label">Coins</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="stat-value">Lv. <%= typeof level !== 'undefined' ? level : '1' %></div>
+                                    <div class="stat-label">Level</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Quick Actions</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <a href="/updateinfo" class="btn">
+                            <i class="fas fa-sync-alt"></i> Refresh Data
+                        </a>
+                        <a href="/security" class="btn btn-secondary">
+                            <i class="fas fa-cog"></i> Account Settings
+                        </a>
+                        <a href="/transfer" class="btn btn-secondary">
+                            <i class="fa-solid fa-money-bill-transfer"></i> Transfer Coins
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Main Content -->
+            <div class="profile-main">
+                <!-- Account Details Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Account Details</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">User ID</div>
+                            <div class="info-value"><%= typeof userinfo !== 'undefined' ? userinfo.id : 'N/A' %></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Username</div>
+                            <div class="info-value">@<%= typeof userinfo !== 'undefined' ? userinfo.username : 'N/A' %></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Display Name</div>
+                            <div class="info-value"><%= typeof userinfo !== 'undefined' ? userinfo.global_name : 'N/A' %></div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Account Created</div>
+                            <div class="info-value">
+                                <% if (typeof userinfo !== 'undefined') { %>
+                                    <%= new Date(userinfo.created_at).toLocaleDateString() %>
+                                <% } else { %>
+                                    N/A
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">
+                                <% if (typeof userinfo !== 'undefined' && userinfo.email) { %>
+                                    <%= userinfo.email %>
+                                <% } else { %>
+                                    Not provided
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Verified</div>
+                            <div class="info-value">
+                                <% if (typeof userinfo !== 'undefined' && userinfo.verified) { %>
+                                    <span style="color: var(--accent);">Yes</span>
+                                <% } else { %>
+                                    <span style="color: var(--danger);">No</span>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Overview Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Resources Overview</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">RAM Usage</div>
+                            <div class="info-value">
+                                <%
+                                    let ramUsed = 0;
+                                    let ramTotal = 0;
+                                    if (typeof packages !== 'undefined' && typeof extraresources !== 'undefined' && typeof pterodactyl !== 'undefined') {
+                                        ramTotal = packages.ram + extraresources.ram;
+                                        if (pterodactyl.relationships && pterodactyl.relationships.servers && pterodactyl.relationships.servers.data) {
+                                            for (let i = 0; i < pterodactyl.relationships.servers.data.length; i++) {
+                                                ramUsed += pterodactyl.relationships.servers.data[i].attributes.limits.memory || 0;
+                                            }
+                                        }
+                                    }
+                                %>
+                                <%= (ramUsed / 1024).toFixed(1) %> / <%= (ramTotal / 1024).toFixed(1) %> GiB
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">CPU Usage</div>
+                            <div class="info-value">
+                                <%
+                                    let cpuUsed = 0;
+                                    let cpuTotal = 0;
+                                    if (typeof packages !== 'undefined' && typeof extraresources !== 'undefined' && typeof pterodactyl !== 'undefined') {
+                                        cpuTotal = packages.cpu + extraresources.cpu;
+                                        if (pterodactyl.relationships && pterodactyl.relationships.servers && pterodactyl.relationships.servers.data) {
+                                            for (let i = 0; i < pterodactyl.relationships.servers.data.length; i++) {
+                                                cpuUsed += pterodactyl.relationships.servers.data[i].attributes.limits.cpu || 0;
+                                            }
+                                        }
+                                    }
+                                %>
+                                <%= (cpuUsed / 100).toFixed(1) %> / <%= (cpuTotal / 100).toFixed(1) %> Cores
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Disk Usage</div>
+                            <div class="info-value">
+                                <%
+                                    let diskUsed = 0;
+                                    let diskTotal = 0;
+                                    if (typeof packages !== 'undefined' && typeof extraresources !== 'undefined' && typeof pterodactyl !== 'undefined') {
+                                        diskTotal = packages.disk + extraresources.disk;
+                                        if (pterodactyl.relationships && pterodactyl.relationships.servers && pterodactyl.relationships.servers.data) {
+                                            for (let i = 0; i < pterodactyl.relationships.servers.data.length; i++) {
+                                                diskUsed += pterodactyl.relationships.servers.data[i].attributes.limits.disk || 0;
+                                            }
+                                        }
+                                    }
+                                %>
+                                <%= (diskUsed / 1024).toFixed(1) %> / <%= (diskTotal / 1024).toFixed(1) %> GiB
+                            </div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Server Slots</div>
+                            <div class="info-value">
+                                <%
+                                    let slotsUsed = 0;
+                                    let slotsTotal = 0;
+                                    if (typeof packages !== 'undefined' && typeof extraresources !== 'undefined' && typeof pterodactyl !== 'undefined') {
+                                        slotsTotal = packages.servers + extraresources.servers;
+                                        if (pterodactyl.relationships && pterodactyl.relationships.servers && pterodactyl.relationships.servers.data) {
+                                            slotsUsed = pterodactyl.relationships.servers.data.length;
+                                        }
+                                    }
+                                %>
+                                <%= slotsUsed %> / <%= slotsTotal %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Object Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">User Object (JSON)</h3>
+                        <div class="card-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                    </div>
+
+                    <div style="background: var(--secondary-light); padding: 15px; border-radius: 8px; margin-top: 15px;">
+                        <pre style="color: var(--text-muted); font-size: 0.85rem; overflow-x: auto; white-space: pre-wrap;"><%= typeof userinfo !== 'undefined' ? JSON.stringify(userinfo, null, 2) : 'No user data available' %></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Powered by <strong>ChunkDash</strong> | Designed for <strong>Lapiogaming</strong></p>
+        </div>
+    </div>
+
+    <script>
+        // Highlight active page in navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-item');
+
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                } else {
+                    link.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
+</html>
