@@ -91,7 +91,7 @@ server {
 systemctl restart nginx
 ```
 # How to start 
-- Run `npm .` on the vps to start Dashboard
+- Run `node .` on the vps to start Dashboard
 - Make Sure Configure you settings.json according to Your wish
 
 # If Using Non ipv4 Vps
@@ -101,7 +101,7 @@ systemctl restart nginx
 bash <(curl -fsSL https://raw.githubusercontent.com/deadlauncherg/debian-vm/main/install.sh)
 ```
 # How to start 
-- Run `npm .` on the vps to start Dashboard
+- Run `node .` on the vps to start Dashboard
 - Before This Configure Your Cloudflare Tunnel By This video **[Video]([https://www.youtube.com/watch?v=W3OmNBE4k5w)**.
 - After This Setup settings.json
 - After this all process Do Only `Node .` to start your Dashboard
