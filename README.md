@@ -102,7 +102,11 @@ bash <(curl -fsSL https://raw.githubusercontent.com/deadlauncherg/debian-vm/main
 ```
 # How to start 
 - Run `npm .` on the vps to start Dashboard
-- Before This Configure Your Cloudflare Tunnel By This video **[Video]([https://www.youtube.com/watch?v=W3OmNBE4k5w)**.  
+- Before This Configure Your Cloudflare Tunnel By This video **[Video]([https://www.youtube.com/watch?v=W3OmNBE4k5w)**.
+- After This Setup settings.json
+- After this all process Do Only `Node .` to start your Dashboard
+- Now Your Dashboard is accessable with your Forwaded Cloudflare Domain
+- 
 ## 🙌 Credits
 
 This project is proudly developed and maintained by **[LapioGaming](https://www.youtube.com/@LapioGaming)**.  
