@@ -1,5 +1,5 @@
 /**
- * |-| [- |_ | /\ ( ~|~ `/ |_
+ * CHUNKDASH Feastic Theme
  *
  * ChunkDash 14.11.0 ― Cascade Ridge
  *
