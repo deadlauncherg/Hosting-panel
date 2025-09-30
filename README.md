@@ -90,10 +90,19 @@ server {
 ```
 systemctl restart nginx
 ```
-# HOw to start 
+# How to start 
 - Run `npm .` on the vps to start Dashboard
 - Make Sure Configure you settings.json according to Your wish
 
+# If Using Non ipv4 Vps
+
+# Easy and One Line cmd
+```
+bash <(curl -fsSL https://raw.githubusercontent.com/deadlauncherg/debian-vm/main/install.sh)
+```
+# How to start 
+- Run `npm .` on the vps to start Dashboard
+- Before This Configure Your Cloudflare Tunnel By This video **[Video]([https://www.youtube.com/watch?v=W3OmNBE4k5w)**.  
 ## 🙌 Credits
 
 This project is proudly developed and maintained by **[LapioGaming](https://www.youtube.com/@LapioGaming)**.  
