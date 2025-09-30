@@ -48,11 +48,11 @@ ufw allow 80 && ufw allow 443
 ```
 certbot certonly -d <Your Domain>
 ```
-# nano configure for poxy
+# nano configure for proxy
 ```
 nano /etc/nginx/sites-enabled/heliactyl.conf
 ```
-# Poxy configure
+# Proxy configure
 ```
 server {
     listen 80;
