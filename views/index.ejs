@@ -1,32 +1,14 @@
-Here is the updated "Chunk Host Portal" HTML code with the new background image and a simple "Verify you are human" checkbox.
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chunk Host Portal</title>
-    <link rel="icon" type="image/x-icon" href="../assets/favicon.png">
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <style>
-        :root {
-            --primary: #0a0e17;
-            --secondary: #131a2c;
-            --accent: #00a3ff;
-            --accent-glow: 0 0 10px rgba(0, 163, 255, 0.7), 0 0 20px rgba(0, 163, 255, 0.4);
-            --text-primary: #ffffff;
-            --text-secondary: #a0aec0;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -35,18 +17,14 @@ Here is the updated "Chunk Host Portal" HTML code with the new background image 
 
         body {
             font-family: 'Rajdhani', sans-serif;
-            background: var(--primary);
-            color: var(--text-primary);
             min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            position: relative;
         }
 
-        /* NEW BACKGROUND IMAGE - direct from GitHub */
         body::before {
             content: "";
             position: fixed;
@@ -58,85 +36,41 @@ Here is the updated "Chunk Host Portal" HTML code with the new background image 
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            filter: brightness(0.65) saturate(1.1);
-            z-index: -3;
+            filter: brightness(0.6);
+            z-index: -2;
         }
 
-        /* Dark overlay for readability, keeps the background visible but text pops */
-        .bg-overlay {
+        body::after {
+            content: "";
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(10, 14, 23, 0.65);
-            backdrop-filter: blur(2px);
-            z-index: -2;
-        }
-
-        /* Grid Overlay (subtle) */
-        .grid-overlay {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 163, 255, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 163, 255, 0.08) 1px, transparent 1px);
-            background-size: 40px 40px;
+            background: rgba(10, 14, 23, 0.7);
+            backdrop-filter: blur(3px);
             z-index: -1;
-            opacity: 0.4;
-            pointer-events: none;
         }
 
-        /* Main Container */
         .login-container {
             width: 100%;
-            max-width: 480px;
-            perspective: 1000px;
+            max-width: 450px;
         }
 
         .login-card {
-            background: rgba(19, 26, 44, 0.75);
+            background: rgba(19, 26, 44, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(0, 163, 255, 0.3);
             border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 163, 255, 0.1);
-            transform-style: preserve-3d;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
         }
 
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent, 
-                rgba(0, 163, 255, 0.08), 
-                transparent
-            );
-            transform: rotate(45deg);
-            animation: shine 10s infinite;
-            z-index: 0;
+        .login-card:hover {
+            transform: translateY(-5px);
         }
 
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
-
-        .card-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Header */
         .header {
             text-align: center;
             margin-bottom: 30px;
@@ -146,46 +80,51 @@ Here is the updated "Chunk Host Portal" HTML code with the new background image 
             width: 80px;
             height: 80px;
             margin: 0 auto 15px;
-            background: linear-gradient(145deg, var(--secondary), var(--primary));
+            background: linear-gradient(145deg, #131a2c, #0a0e17);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: var(--accent-glow);
-            border: 1px solid var(--accent);
+            box-shadow: 0 0 10px rgba(0, 163, 255, 0.7);
+            border: 1px solid #00a3ff;
         }
 
         .logo i {
             font-size: 32px;
-            color: var(--accent);
+            color: #00a3ff;
         }
 
         .title {
             font-family: 'Orbitron', sans-serif;
             font-size: 28px;
             font-weight: 700;
-            margin-bottom: 8px;
             letter-spacing: 1px;
-            background: linear-gradient(to right, #ffffff, var(--accent));
+            background: linear-gradient(to right, #ffffff, #00a3ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
         .subtitle {
-            color: var(--text-secondary);
-            font-size: 16px;
+            color: #a0aec0;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #a0aec0;
             font-weight: 500;
         }
 
-        /* Simple Human Verification Section */
         .verify-section {
-            background: rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 12px;
             padding: 14px 16px;
-            margin: 20px 0 24px;
-            border: 1px solid rgba(0, 163, 255, 0.25);
-            transition: all 0.2s ease;
+            margin: 20px 0;
+            border: 1px solid rgba(0, 163, 255, 0.3);
+            transition: all 0.2s;
         }
 
         .verify-label {
@@ -193,28 +132,24 @@ Here is the updated "Chunk Host Portal" HTML code with the new background image 
             align-items: center;
             gap: 12px;
             cursor: pointer;
-            user-select: none;
         }
 
         .verify-label input {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             cursor: pointer;
-            accent-color: var(--accent);
-            margin: 0;
+            accent-color: #00a3ff;
         }
 
         .verify-text {
             font-weight: 500;
             font-size: 15px;
-            letter-spacing: 0.3px;
             color: #e2e8f0;
         }
 
-        .verify-icon {
-            color: var(--accent);
-            font-size: 1.2rem;
-            margin-right: 4px;
+        .verify-text i {
+            color: #00a3ff;
+            margin-right: 6px;
         }
 
         .verify-status {
@@ -226,251 +161,118 @@ Here is the updated "Chunk Host Portal" HTML code with the new background image 
             gap: 6px;
         }
 
-        .status-badge {
-            transition: 0.2s;
-        }
-
-        /* Login Button */
         .login-button {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, var(--accent) 0%, #0062cc 100%);
+            padding: 14px;
+            background: linear-gradient(135deg, #00a3ff 0%, #0062cc 100%);
             color: white;
             border: none;
             border-radius: 12px;
             font-family: 'Orbitron', sans-serif;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
             letter-spacing: 1px;
             cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(0, 131, 255, 0.4);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
         }
 
         .login-button:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
-            filter: grayscale(0.1);
-            transform: none;
-        }
-
-        .login-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.2),
-                transparent
-            );
-            transition: 0.5s;
         }
 
         .login-button:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 131, 255, 0.7);
-        }
-
-        .login-button:hover:not(:disabled)::before {
-            left: 100%;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 163, 255, 0.5);
         }
 
         .login-button i {
-            margin-right: 12px;
-            font-size: 20px;
+            margin-right: 10px;
+            font-size: 18px;
         }
 
-        /* Footer */
         .footer {
             text-align: center;
             margin-top: 30px;
-            color: var(--text-secondary);
-            font-size: 13px;
-        }
-
-        /* Animation for card float */
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate3d(0, 0, 0, 0deg); }
-            50% { transform: translateY(-8px) rotate3d(0.5, 0, 0, 1deg); }
-        }
-
-        .login-card {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        /* Responsive */
-        @media (max-width: 576px) {
-            .login-card {
-                padding: 30px 20px;
-            }
-            .title {
-                font-size: 24px;
-            }
-        }
-
-        /* subtle hover improvements */
-        .verify-section:hover {
-            border-color: rgba(0, 163, 255, 0.5);
-            background: rgba(0, 163, 255, 0.05);
+            color: #a0aec0;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
-
-    <!-- Dark overlay for better text contrast -->
-    <div class="bg-overlay"></div>
-    <div class="grid-overlay"></div>
-
-    <!-- Login Container -->
     <div class="login-container">
         <div class="login-card">
-            <div class="card-content">
-                <div class="header">
-                    <div class="logo">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h1 class="title">CHUNK HOST</h1>
-                    <p class="subtitle">Next-Generation Server Solutions</p>
+            <div class="header">
+                <div class="logo">
+                    <i class="fas fa-server"></i>
                 </div>
+                <h1 class="title">CHUNK HOST</h1>
+                <p class="subtitle">Next-Generation Server Solutions</p>
+            </div>
 
-                <p class="welcome-text" style="text-align: center; margin-bottom: 15px; color: var(--text-secondary); font-weight: 500;">
-                    Access your ChunkHost dashboard
-                </p>
+            <p class="welcome-text">Access your ChunkHost dashboard</p>
 
-                <!-- SIMPLE HUMAN VERIFICATION (Checkbox style) -->
-                <div class="verify-section" id="verifySection">
-                    <label class="verify-label" id="verifyCheckboxLabel">
-                        <input type="checkbox" id="humanCheckbox">
-                        <span class="verify-text">
-                            <i class="fas fa-shield-alt verify-icon"></i> 
-                            Verify you are human
-                        </span>
-                    </label>
-                    <div class="verify-status" id="verifyStatusMsg">
-                        <i class="fas fa-info-circle"></i>
-                        <span class="status-badge">Click to confirm you're human (simple verification)</span>
-                    </div>
+            <div class="verify-section" id="verifySection">
+                <label class="verify-label">
+                    <input type="checkbox" id="humanCheckbox">
+                    <span class="verify-text">
+                        <i class="fas fa-shield-alt"></i> Verify you are human
+                    </span>
+                </label>
+                <div class="verify-status" id="verifyStatus">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Click the checkbox to confirm you're human</span>
                 </div>
+            </div>
 
-                <!-- Discord Login button (disabled until verified) -->
-                <a href="../login" class="login-button" id="discordLoginBtn">
-                    <i class="fab fa-discord"></i>
-                    SIGN IN WITH DISCORD
-                </a>
+            <a href="../login" class="login-button" id="discordBtn">
+                <i class="fab fa-discord"></i>
+                SIGN IN WITH DISCORD
+            </a>
 
-                <div class="footer">
-                    <p>© 2024 ChunkHost Hosting. All systems operational.</p>
-                </div>
+            <div class="footer">
+                <p>© 2024 ChunkHost Hosting. All systems operational.</p>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // ---------- SIMPLE HUMAN VERIFICATION LOGIC ----------
-            const humanCheckbox = document.getElementById('humanCheckbox');
-            const discordBtn = document.getElementById('discordLoginBtn');
-            const verifyStatusSpan = document.querySelector('#verifyStatusMsg .status-badge');
-            
-            // Function to update button state based on checkbox
-            function updateVerificationState() {
-                if (humanCheckbox.checked) {
-                    discordBtn.disabled = false;
-                    if (verifyStatusSpan) {
-                        verifyStatusSpan.innerHTML = '<i class="fas fa-check-circle" style="color:#00ff9d;"></i> Verified — You are human. Proceed to login.';
-                        verifyStatusSpan.style.color = "#b8f2d0";
-                    }
-                    // Change the verify section style to indicate success
-                    const verifyDiv = document.getElementById('verifySection');
-                    if (verifyDiv) {
-                        verifyDiv.style.borderColor = "#2ecc71";
-                        verifyDiv.style.backgroundColor = "rgba(46, 204, 113, 0.1)";
-                    }
-                } else {
-                    discordBtn.disabled = true;
-                    if (verifyStatusSpan) {
-                        verifyStatusSpan.innerHTML = 'Click the checkbox to confirm you\'re human (simple verification).';
-                        verifyStatusSpan.style.color = "#a0aec0";
-                    }
-                    const verifyDiv = document.getElementById('verifySection');
-                    if (verifyDiv) {
-                        verifyDiv.style.borderColor = "rgba(0, 163, 255, 0.25)";
-                        verifyDiv.style.backgroundColor = "rgba(0, 0, 0, 0.35)";
-                    }
-                }
+        const checkbox = document.getElementById('humanCheckbox');
+        const button = document.getElementById('discordBtn');
+        const verifyStatus = document.getElementById('verifyStatus');
+        const verifySection = document.getElementById('verifySection');
+
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                button.disabled = false;
+                verifyStatus.innerHTML = '<i class="fas fa-check-circle" style="color:#2ecc71;"></i> <span style="color:#2ecc71;">Verified — You are human. Proceed to login.</span>';
+                verifySection.style.borderColor = '#2ecc71';
+                verifySection.style.background = 'rgba(46, 204, 113, 0.1)';
+            } else {
+                button.disabled = true;
+                verifyStatus.innerHTML = '<i class="fas fa-info-circle"></i> <span>Click the checkbox to confirm you\'re human</span>';
+                verifySection.style.borderColor = 'rgba(0, 163, 255, 0.3)';
+                verifySection.style.background = 'rgba(0, 0, 0, 0.4)';
             }
-            
-            // Attach event listener to checkbox
-            if (humanCheckbox) {
-                humanCheckbox.addEventListener('change', updateVerificationState);
-                // Initialize button state (disabled by default)
-                discordBtn.disabled = true;
-            }
-            
-            // Optional: Add a small animation when checkbox is checked
-            humanCheckbox.addEventListener('change', function(e) {
-                if (this.checked) {
-                    // Simple UI feedback
-                    const verifyDiv = document.getElementById('verifySection');
-                    if (verifyDiv) {
-                        verifyDiv.style.transform = "scale(0.99)";
-                        setTimeout(() => { if(verifyDiv) verifyDiv.style.transform = ""; }, 150);
+        });
+
+        button.disabled = true;
+
+        button.addEventListener('click', function(e) {
+            if (button.disabled) {
+                e.preventDefault();
+                verifyStatus.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#ffaa33;"></i> <span style="color:#ffaa33;">Please verify you are human first!</span>';
+                setTimeout(() => {
+                    if (!checkbox.checked) {
+                        verifyStatus.innerHTML = '<i class="fas fa-info-circle"></i> <span>Click the checkbox to confirm you\'re human</span>';
                     }
-                }
-            });
-            
-            // ---------- PREVENT CLICK ON DISABLED BUTTON (just in case) ----------
-            discordBtn.addEventListener('click', function(e) {
-                if (discordBtn.disabled) {
-                    e.preventDefault();
-                    // visual feedback
-                    const msgDiv = document.getElementById('verifyStatusMsg');
-                    if (msgDiv) {
-                        const originalText = msgDiv.innerHTML;
-                        msgDiv.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#ffaa33;"></i> <span style="color:#ffaa33;">Please verify you are human first!</span>';
-                        setTimeout(() => {
-                            if (msgDiv) msgDiv.innerHTML = originalText;
-                        }, 2000);
-                    }
-                    return false;
-                }
-                // if enabled, just allow the href redirect
-                return true;
-            });
-            
-            // ---------- BACKGROUND ASSETS / Remove old particle network to keep new background clean ----------
-            // (No canvas needed, we use the raw background image from GitHub)
-            // Also ensure any leftover particle-network div is gone (original removed)
-            // We'll also add a dynamic tilt effect on the card (premium feel)
-            const card = document.querySelector('.login-card');
-            if (card) {
-                card.addEventListener('mousemove', (e) => {
-                    const x = e.clientX - card.getBoundingClientRect().left;
-                    const y = e.clientY - card.getBoundingClientRect().top;
-                    const centerX = card.offsetWidth / 2;
-                    const centerY = card.offsetHeight / 2;
-                    const rotateX = (y - centerY) / 25;
-                    const rotateY = (centerX - x) / 25;
-                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-                });
+                }, 2000);
             }
-            
-            // Optional: small console confirmation
-            console.log("ChunkHost | Simple human verification added + background image updated (GitHub raw).");
         });
     </script>
 </body>
 </html>
-```
