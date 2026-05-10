@@ -1,3 +1,5 @@
+Here is the updated "Chunk Host Portal" HTML code with the new background image and a simple "Verify you are human" checkbox.
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +38,7 @@
             background: var(--primary);
             color: var(--text-primary);
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
             display: flex;
             align-items: center;
@@ -44,28 +46,46 @@
             padding: 20px;
         }
 
-        /* Particle Network Background */
-        #particle-network {
-            position: absolute;
+        /* NEW BACKGROUND IMAGE - direct from GitHub */
+        body::before {
+            content: "";
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            background-image: url('https://raw.githubusercontent.com/deadlauncherg/PUFFER-PANEL-IN-FIREBASE/6f54b98eef887707941bcbad542d91f493c3dc18/f563e69bc655c58937afed34c3409cbfb526565b.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(0.65) saturate(1.1);
+            z-index: -3;
+        }
+
+        /* Dark overlay for readability, keeps the background visible but text pops */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 14, 23, 0.65);
+            backdrop-filter: blur(2px);
             z-index: -2;
         }
 
-        /* Grid Overlay */
+        /* Grid Overlay (subtle) */
         .grid-overlay {
-            position: absolute;
+            position: fixed;
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(10, 14, 23, 0.7) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(10, 14, 23, 0.7) 1px, transparent 1px);
+                linear-gradient(rgba(0, 163, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 163, 255, 0.08) 1px, transparent 1px);
             background-size: 40px 40px;
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.4;
+            pointer-events: none;
         }
 
         /* Main Container */
@@ -76,12 +96,12 @@
         }
 
         .login-card {
-            background: rgba(19, 26, 44, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 163, 255, 0.2);
-            border-radius: 16px;
+            background: rgba(19, 26, 44, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 163, 255, 0.3);
+            border-radius: 24px;
             padding: 40px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 163, 255, 0.1);
             transform-style: preserve-3d;
             transition: var(--transition);
             position: relative;
@@ -98,11 +118,11 @@
             background: linear-gradient(
                 45deg,
                 transparent, 
-                rgba(0, 163, 255, 0.1), 
+                rgba(0, 163, 255, 0.08), 
                 transparent
             );
             transform: rotate(45deg);
-            animation: shine 6s infinite;
+            animation: shine 10s infinite;
             z-index: 0;
         }
 
@@ -148,13 +168,66 @@
             letter-spacing: 1px;
             background: linear-gradient(to right, #ffffff, var(--accent));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
         }
 
         .subtitle {
             color: var(--text-secondary);
             font-size: 16px;
             font-weight: 500;
+        }
+
+        /* Simple Human Verification Section */
+        .verify-section {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 20px 0 24px;
+            border: 1px solid rgba(0, 163, 255, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .verify-label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .verify-label input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--accent);
+            margin: 0;
+        }
+
+        .verify-text {
+            font-weight: 500;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+            color: #e2e8f0;
+        }
+
+        .verify-icon {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-right: 4px;
+        }
+
+        .verify-status {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge {
+            transition: 0.2s;
         }
 
         /* Login Button */
@@ -167,7 +240,7 @@
             background: linear-gradient(135deg, var(--accent) 0%, #0062cc 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-family: 'Orbitron', sans-serif;
             font-size: 16px;
             font-weight: 600;
@@ -177,6 +250,13 @@
             box-shadow: 0 4px 15px rgba(0, 131, 255, 0.4);
             position: relative;
             overflow: hidden;
+        }
+
+        .login-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            filter: grayscale(0.1);
+            transform: none;
         }
 
         .login-button::before {
@@ -195,12 +275,12 @@
             transition: 0.5s;
         }
 
-        .login-button:hover {
+        .login-button:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 131, 255, 0.6);
+            box-shadow: 0 8px 25px rgba(0, 131, 255, 0.7);
         }
 
-        .login-button:hover::before {
+        .login-button:hover:not(:disabled)::before {
             left: 100%;
         }
 
@@ -214,36 +294,40 @@
             text-align: center;
             margin-top: 30px;
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 13px;
         }
 
-        /* Animation for the card */
+        /* Animation for card float */
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate3d(0, 0, 0, 0deg); }
-            50% { transform: translateY(-10px) rotate3d(0.5, 0, 0, 2deg); }
+            50% { transform: translateY(-8px) rotate3d(0.5, 0, 0, 1deg); }
         }
 
         .login-card {
             animation: float 6s ease-in-out infinite;
         }
 
-        /* Responsive adjustments */
+        /* Responsive */
         @media (max-width: 576px) {
             .login-card {
                 padding: 30px 20px;
             }
-
             .title {
                 font-size: 24px;
             }
         }
+
+        /* subtle hover improvements */
+        .verify-section:hover {
+            border-color: rgba(0, 163, 255, 0.5);
+            background: rgba(0, 163, 255, 0.05);
+        }
     </style>
 </head>
 <body>
-    <!-- Particle Network Background -->
-    <div id="particle-network"></div>
 
-    <!-- Grid Overlay -->
+    <!-- Dark overlay for better text contrast -->
+    <div class="bg-overlay"></div>
     <div class="grid-overlay"></div>
 
     <!-- Login Container -->
@@ -258,11 +342,27 @@
                     <p class="subtitle">Next-Generation Server Solutions</p>
                 </div>
 
-                <p class="welcome-text" style="text-align: center; margin-bottom: 25px; color: var(--text-secondary);">
+                <p class="welcome-text" style="text-align: center; margin-bottom: 15px; color: var(--text-secondary); font-weight: 500;">
                     Access your ChunkHost dashboard
                 </p>
 
-                <a href="../login" class="login-button">
+                <!-- SIMPLE HUMAN VERIFICATION (Checkbox style) -->
+                <div class="verify-section" id="verifySection">
+                    <label class="verify-label" id="verifyCheckboxLabel">
+                        <input type="checkbox" id="humanCheckbox">
+                        <span class="verify-text">
+                            <i class="fas fa-shield-alt verify-icon"></i> 
+                            Verify you are human
+                        </span>
+                    </label>
+                    <div class="verify-status" id="verifyStatusMsg">
+                        <i class="fas fa-info-circle"></i>
+                        <span class="status-badge">Click to confirm you're human (simple verification)</span>
+                    </div>
+                </div>
+
+                <!-- Discord Login button (disabled until verified) -->
+                <a href="../login" class="login-button" id="discordLoginBtn">
                     <i class="fab fa-discord"></i>
                     SIGN IN WITH DISCORD
                 </a>
@@ -275,117 +375,102 @@
     </div>
 
     <script>
-        // Particle network animation
         document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const container = document.getElementById('particle-network');
-            container.appendChild(canvas);
-
-            let width = container.offsetWidth;
-            let height = container.offsetHeight;
-
-            canvas.width = width;
-            canvas.height = height;
-
-            // Particle class
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.velocity = {
-                        x: (Math.random() - 0.5) * 0.5,
-                        y: (Math.random() - 0.5) * 0.5
-                    };
-                    this.radius = Math.random() * 1.5 + 0.5;
-                    this.color = `rgba(0, 163, 255, ${Math.random() * 0.4 + 0.1})`;
-                }
-
-                update() {
-                    this.x += this.velocity.x;
-                    this.y += this.velocity.y;
-
-                    if (this.x < 0 || this.x > width) this.velocity.x *= -1;
-                    if (this.y < 0 || this.y > height) this.velocity.y *= -1;
-                }
-
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-                }
-            }
-
-            // Create particles
-            const particles = [];
-            const particleCount = 100;
-
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-                ctx.clearRect(0, 0, width, height);
-
-                // Draw connections
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-
-                        if (distance < 150) {
-                            ctx.beginPath();
-                            ctx.strokeStyle = `rgba(0, 163, 255, ${0.1 * (1 - distance/150)})`;
-                            ctx.lineWidth = 0.5;
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.stroke();
-                        }
+            // ---------- SIMPLE HUMAN VERIFICATION LOGIC ----------
+            const humanCheckbox = document.getElementById('humanCheckbox');
+            const discordBtn = document.getElementById('discordLoginBtn');
+            const verifyStatusSpan = document.querySelector('#verifyStatusMsg .status-badge');
+            
+            // Function to update button state based on checkbox
+            function updateVerificationState() {
+                if (humanCheckbox.checked) {
+                    discordBtn.disabled = false;
+                    if (verifyStatusSpan) {
+                        verifyStatusSpan.innerHTML = '<i class="fas fa-check-circle" style="color:#00ff9d;"></i> Verified — You are human. Proceed to login.';
+                        verifyStatusSpan.style.color = "#b8f2d0";
+                    }
+                    // Change the verify section style to indicate success
+                    const verifyDiv = document.getElementById('verifySection');
+                    if (verifyDiv) {
+                        verifyDiv.style.borderColor = "#2ecc71";
+                        verifyDiv.style.backgroundColor = "rgba(46, 204, 113, 0.1)";
+                    }
+                } else {
+                    discordBtn.disabled = true;
+                    if (verifyStatusSpan) {
+                        verifyStatusSpan.innerHTML = 'Click the checkbox to confirm you\'re human (simple verification).';
+                        verifyStatusSpan.style.color = "#a0aec0";
+                    }
+                    const verifyDiv = document.getElementById('verifySection');
+                    if (verifyDiv) {
+                        verifyDiv.style.borderColor = "rgba(0, 163, 255, 0.25)";
+                        verifyDiv.style.backgroundColor = "rgba(0, 0, 0, 0.35)";
                     }
                 }
-
-                // Update and draw particles
-                particles.forEach(particle => {
-                    particle.update();
-                    particle.draw();
+            }
+            
+            // Attach event listener to checkbox
+            if (humanCheckbox) {
+                humanCheckbox.addEventListener('change', updateVerificationState);
+                // Initialize button state (disabled by default)
+                discordBtn.disabled = true;
+            }
+            
+            // Optional: Add a small animation when checkbox is checked
+            humanCheckbox.addEventListener('change', function(e) {
+                if (this.checked) {
+                    // Simple UI feedback
+                    const verifyDiv = document.getElementById('verifySection');
+                    if (verifyDiv) {
+                        verifyDiv.style.transform = "scale(0.99)";
+                        setTimeout(() => { if(verifyDiv) verifyDiv.style.transform = ""; }, 150);
+                    }
+                }
+            });
+            
+            // ---------- PREVENT CLICK ON DISABLED BUTTON (just in case) ----------
+            discordBtn.addEventListener('click', function(e) {
+                if (discordBtn.disabled) {
+                    e.preventDefault();
+                    // visual feedback
+                    const msgDiv = document.getElementById('verifyStatusMsg');
+                    if (msgDiv) {
+                        const originalText = msgDiv.innerHTML;
+                        msgDiv.innerHTML = '<i class="fas fa-exclamation-triangle" style="color:#ffaa33;"></i> <span style="color:#ffaa33;">Please verify you are human first!</span>';
+                        setTimeout(() => {
+                            if (msgDiv) msgDiv.innerHTML = originalText;
+                        }, 2000);
+                    }
+                    return false;
+                }
+                // if enabled, just allow the href redirect
+                return true;
+            });
+            
+            // ---------- BACKGROUND ASSETS / Remove old particle network to keep new background clean ----------
+            // (No canvas needed, we use the raw background image from GitHub)
+            // Also ensure any leftover particle-network div is gone (original removed)
+            // We'll also add a dynamic tilt effect on the card (premium feel)
+            const card = document.querySelector('.login-card');
+            if (card) {
+                card.addEventListener('mousemove', (e) => {
+                    const x = e.clientX - card.getBoundingClientRect().left;
+                    const y = e.clientY - card.getBoundingClientRect().top;
+                    const centerX = card.offsetWidth / 2;
+                    const centerY = card.offsetHeight / 2;
+                    const rotateX = (y - centerY) / 25;
+                    const rotateY = (centerX - x) / 25;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
                 });
             }
-
-            // Handle resize
-            window.addEventListener('resize', function() {
-                width = container.offsetWidth;
-                height = container.offsetHeight;
-                canvas.width = width;
-                canvas.height = height;
-            });
-
-            // Start animation
-            animate();
-
-            // Tilt effect on the card
-            const card = document.querySelector('.login-card');
-
-            card.addEventListener('mousemove', (e) => {
-                const x = e.clientX - card.getBoundingClientRect().left;
-                const y = e.clientY - card.getBoundingClientRect().top;
-
-                const centerX = card.offsetWidth / 2;
-                const centerY = card.offsetHeight / 2;
-
-                const rotateX = (y - centerY) / 25;
-                const rotateY = (centerX - x) / 25;
-
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
-            });
+            
+            // Optional: small console confirmation
+            console.log("ChunkHost | Simple human verification added + background image updated (GitHub raw).");
         });
     </script>
 </body>
 </html>
+```
